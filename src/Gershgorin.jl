@@ -1,6 +1,6 @@
 module Gershgorin
 
-export gershgorin
+export gershgorin, gershgorin!
 include("discs.jl")
 
 end

@@ -9,21 +9,42 @@ function get_discs(A::AbstractMatrix)
 end
 
 
-function disc_shape(c::T, r::S) where {T<:Complex,S<:Real}
+function disc_shape(center::T, radius::S) where {T<:Complex,S<:Real}
     θ = LinRange(0, 2 * π, 100)
-    return c.re .+ r * sin.(θ), c.im .+ r * cos.(θ)
+    # @. disc = c + r * exp(im * θ)
+    return center.re .+ radius * sin.(θ), center.im .+ radius * cos.(θ)
 end
 
 
-function plot_disc(centers::Vector{T}, radii::Vector{S}) where {T<:Complex,S<:Real}
+function parse_label(label::String, dim::Int)
+    if label == ""
+        return ""
+    else
+        return reshape([i == 1 ? label : nothing for i in 1:dim][:, :], (1, dim))
+    end
+end
+
+function plot_disc(centers::Vector{T}, radii::Vector{S}, c::Symbol, label::String) where {T<:Complex,S<:Real}
     plot(disc_shape.(centers, radii), seriestype=[:shape],
-        c=:blue, fillalpha=0.2, lw=0,
-        xlabel="Real Axis", ylabel="Imaginary Axis",
-        legend=false, aspect_ratio=1)
+        c=c, fillalpha=0.2, lw=0,
+        xlabel="Real Axis", ylabel="Imaginary Axis", label=parse_label(label, length(centers)),
+        legend=false ? label == "" : true, aspect_ratio=1)
+end
+
+function plot_disc!(centers::Vector{T}, radii::Vector{S}, c::Symbol, label::String) where {T<:Complex,S<:Real}
+    plot!(disc_shape.(centers, radii), seriestype=[:shape],
+        c=c, fillalpha=0.2, lw=0,
+        xlabel="Real Axis", ylabel="Imaginary Axis", label=parse_label(label, length(centers)),
+        legend=false ? label == "" : true, aspect_ratio=1)
 end
 
 
-function gershgorin(A::AbstractMatrix)
+function gershgorin(A::AbstractMatrix; c=:blue, label="")
     centers, radii = get_discs(A)
-    plot_disc(centers, radii) |> display
+    plot_disc(centers, radii, c, label)
+end
+
+function gershgorin!(A::AbstractMatrix; c=:red, label="")
+    centers, radii = get_discs(A)
+    plot_disc!(centers, radii, c, label)
 end
