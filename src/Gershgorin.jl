@@ -1,5 +1,6 @@
 module Gershgorin
 
-# Write your package code here.
+export gershgorin
+include("discs.jl")
 
 end
