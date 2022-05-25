@@ -16,9 +16,9 @@ gershgorin(M; c=:blue, label=L"$M$")  # Plot Gershgorin's discs
 λ = eigvals(M)
 p1 = plot!(λ, seriestype=[:scatter], c=:black, label=L"$\lambda(M)$")
 
-gershgorin(M'; c=:red, label=L"$M'$") # Now do the same for the transpose
-λ = eigvals(M')
-p2 = plot!(λ, seriestype=[:scatter], c=:black, label=L"$\lambda(M')$")
+gershgorin(transpose(M); c=:red, label=L"$M^T$")  # Now do the same for the transpose
+λ = eigvals(transpose(M))
+p2 = plot!(λ, seriestype=[:scatter], c=:black, label=L"$\lambda(M^T)$")
 
 plot(p1, p2, link=:all)
 ```
