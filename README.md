@@ -2,7 +2,8 @@
 
 ## Quickstart Guide
 
-First, visualize the Gershgorin discs for a random complexm matrix and its transpose:
+We can visualize the Gershgorin discs for a random complexm matrix and its transpose.
+Note that a matrix and its transpose have the same eigenvalues, so these eigenvalues will lie in the intersection of the Gershgorin regions of these two matrices.
 
 ```Julia
 using LinearAlgebra
@@ -32,3 +33,13 @@ plot(p1, p2, p3, link=:all, dpi=300, layout=(1,3), size=(750,350))
 ```
 
 ![`gershgorin(M)`](notebooks/demo.png "Gershgorin's discs for M and its transpose")
+
+Additionally, if you just want to get the Gershgorin discs for a matrix, you can use the `get_discs` function.
+
+```Julia
+discs = get_discs(M)
+plot(discs, c=:blue, alpha=0.2, lw=0)
+plot!(eigvals(M), seriestype=[:scatter], c=:black, label=L"$\lambda(M)$", aspect_ratio=1) |> display
+```
+
+![`get_discs(M)`](notebooks/demo1.png "Get the discs")
