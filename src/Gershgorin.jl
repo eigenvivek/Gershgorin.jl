@@ -1,6 +1,6 @@
 module Gershgorin
 
-export gershgorin, gershgorin!
+export gershgorin, gershgorin!, overlap
 include("discs.jl")
 
 end
