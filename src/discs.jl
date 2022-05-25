@@ -1,5 +1,5 @@
 using LinearAlgebra
-using Plots
+using Plots, LaTeXStrings
 
 
 function get_discs(A::AbstractMatrix)
@@ -16,7 +16,7 @@ function disc_shape(center::T, radius::S) where {T<:Complex,S<:Real}
 end
 
 
-function parse_label(label::String, dim::Int)
+function parse_label(label::Union{String,LaTeXString}, dim::Int)
     if label == ""
         return ""
     else
@@ -24,14 +24,15 @@ function parse_label(label::String, dim::Int)
     end
 end
 
-function plot_disc(centers::Vector{T}, radii::Vector{S}, c::Symbol, label::String) where {T<:Complex,S<:Real}
+
+function plot_disc(centers::Vector{T}, radii::Vector{S}, c::Symbol, label::Union{String,LaTeXString}) where {T<:Complex,S<:Real}
     plot(disc_shape.(centers, radii), seriestype=[:shape],
         c=c, fillalpha=0.2, lw=0,
         xlabel="Real Axis", ylabel="Imaginary Axis", label=parse_label(label, length(centers)),
         legend=false ? label == "" : true, aspect_ratio=1)
 end
 
-function plot_disc!(centers::Vector{T}, radii::Vector{S}, c::Symbol, label::String) where {T<:Complex,S<:Real}
+function plot_disc!(centers::Vector{T}, radii::Vector{S}, c::Symbol, label::Union{String,LaTeXString}) where {T<:Complex,S<:Real}
     plot!(disc_shape.(centers, radii), seriestype=[:shape],
         c=c, fillalpha=0.2, lw=0,
         xlabel="Real Axis", ylabel="Imaginary Axis", label=parse_label(label, length(centers)),
