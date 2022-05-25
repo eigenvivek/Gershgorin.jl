@@ -2,7 +2,7 @@
 
 ## Quickstart Guide
 
-We can visualize the Gershgorin discs for a random complexm matrix and its transpose.
+We can visualize the Gershgorin discs for a random complex matrix and its transpose.
 Note that a matrix and its transpose have the same eigenvalues, so these eigenvalues will lie in the intersection of the Gershgorin regions of these two matrices.
 
 ```Julia
