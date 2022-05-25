@@ -1,5 +1,13 @@
 # Gershgorin
 
+Visualize the Gershgorin discs that bound the spectrum of a square matrix (see the [Gershgorin disc theorem](https://en.wikipedia.org/wiki/Gershgorin_circle_theorem)).
+
+## Installation
+
+```zsh
+] add https://github.com/v715/Gershgorin.jl.git
+```
+
 ## Quickstart Guide
 
 We can visualize the Gershgorin discs for a random complex matrix and its transpose.
