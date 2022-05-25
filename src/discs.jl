@@ -4,7 +4,7 @@ using Plots
 
 function get_discs(A::AbstractMatrix)
     centers = diag(A) |> complex
-    radii = A - Diagonal(A) |> M -> sum(M, dims=2) |> x -> abs.(x) |> real
+    radii = A - Diagonal(A) |> x -> abs.(x) |> M -> sum(M, dims=2) |> real
     return centers, radii[:]
 end
 
