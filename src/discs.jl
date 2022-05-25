@@ -1,42 +1,34 @@
 using LinearAlgebra
+using LazySets
 using Plots, LaTeXStrings
 
+complex2array(x::T) where {T<:Complex} = [x.re, x.im]
 
 function get_discs(A::AbstractMatrix)
-    centers = diag(A) |> complex
+    centers = diag(A) |> complex |> x -> complex2array.(x)
     radii = A - Diagonal(A) |> x -> abs.(x) |> M -> sum(M, dims=2) |> real
-    return centers, radii[:]
-end
-
-
-function disc_shape(center::T, radius::S) where {T<:Complex,S<:Real}
-    θ = LinRange(0, 2 * π, 100)
-    # @. disc = c + r * exp(im * θ)
-    return center.re .+ radius * sin.(θ), center.im .+ radius * cos.(θ)
+    discs = [Ball2(c, r) for (c, r) in zip(centers, radii)]
+    return discs
 end
 
 
 function parse_label(label::Union{String,LaTeXString}, dim::Int)
     if label == ""
-        return ""
+        nothing
     else
-        return reshape([i == 1 ? label : nothing for i in 1:dim][:, :], (1, dim))
+        label = reshape([i == 1 ? label : nothing for i in 1:dim][:, :], (1, dim))
     end
+    return label
 end
 
 
-function plot_disc(centers::Vector{T}, radii::Vector{S}, c::Symbol, label::Union{String,LaTeXString}) where {T<:Complex,S<:Real}
-    plot(disc_shape.(centers, radii), seriestype=[:shape],
-        c=c, fillalpha=0.2, lw=0,
-        xlabel="Real Axis", ylabel="Imaginary Axis", label=parse_label(label, length(centers)),
-        legend=false ? label == "" : true, aspect_ratio=1)
-end
-
-function plot_disc!(centers::Vector{T}, radii::Vector{S}, c::Symbol, label::Union{String,LaTeXString}) where {T<:Complex,S<:Real}
-    plot!(disc_shape.(centers, radii), seriestype=[:shape],
-        c=c, fillalpha=0.2, lw=0,
-        xlabel="Real Axis", ylabel="Imaginary Axis", label=parse_label(label, length(centers)),
-        legend=false ? label == "" : true, aspect_ratio=1)
+function gershgorin(A::AbstractMatrix; c=:blue, label="", alpha=0.2)
+    discs = get_discs(A)
+    label = parse_label(label, length(discs))
+    legend = label == "" ? false : true
+    plot(discs, c=c, fillalpha=alpha, lw=0, aspect_ratio=1,
+        legend=legend, label=label,
+        xlabel="Real Axis", ylabel="Imaginary Axis")
 end
 
 
