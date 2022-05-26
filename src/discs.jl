@@ -5,8 +5,8 @@ using Plots, LaTeXStrings
 complex2array(x::T) where {T<:Complex} = [x.re, x.im]
 
 function get_discs(A::AbstractMatrix)
-    centers = diag(A) |> complex |> x -> complex2array.(x)
-    radii = A - Diagonal(A) |> x -> abs.(x) |> M -> sum(M, dims=2) |> real
+    centers = diag(A) .|> Complex .|> complex2array
+    radii = A - Diagonal(A) .|> abs |> M -> sum(M, dims=2) .|> Real
     discs = [Ball2(c, r) for (c, r) in zip(centers, radii)]
     return discs
 end
