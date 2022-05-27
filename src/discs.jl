@@ -42,11 +42,11 @@ function gershgorin!(A::AbstractMatrix; c=:blue, label="", alpha=0.2)
 end
 
 
-function overlap(A::AbstractMatrix, B::AbstractMatrix; c=:white, alpha=0.8)
+function overlap(A::AbstractMatrix, B::AbstractMatrix; c=:white, alpha=0.8, label="Overlap")
     discs_A = get_discs(A)
     discs_B = get_discs(B)
     intersections = [discs_A[i] ∩ discs_B[j] for i in 1:length(discs_A) for j in 1:length(discs_B)]
     overlap = UnionSetArray(intersections)
-    plot!(overlap, aspect_ratio=1, lw=0, c=c, fillalpha=alpha, label="Overlap", legend=true)
+    plot!(overlap, aspect_ratio=1, lw=0, c=c, fillalpha=alpha, label=label, legend=true)
 end
 
