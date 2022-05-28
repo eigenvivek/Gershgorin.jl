@@ -4,8 +4,10 @@ Visualize the Gershgorin discs that bound the spectrum of a square matrix (see t
 
 ## Installation
 
+Hit `]` in the Julia REPL to open the package manager, then use
+
 ```zsh
-] add https://github.com/v715/Gershgorin.jl.git
+pkg> add Gershgorin
 ```
 
 ## Quickstart Guide
