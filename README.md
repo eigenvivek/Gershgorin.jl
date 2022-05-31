@@ -1,5 +1,7 @@
 # Gershgorin
 
+[![Build Status](https://github.com/v715/Gershgorin.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/v715/Gershgorin.jl/actions/workflows/CI.yml?query=branch%3Amain)
+
 Visualize the Gershgorin discs that bound the spectrum of a square matrix (see the [Gershgorin disc theorem](https://en.wikipedia.org/wiki/Gershgorin_circle_theorem)).
 
 ## Installation
